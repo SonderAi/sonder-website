@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
+import ProjectsPage from './pages/ProjectsPage'
+import { AdminRoute, AdminLink } from './components/admin'
 
 // Placeholder pages that will be developed later
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -15,16 +17,23 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Admin Route - Only accessible in development mode */}
+        <Route path="/admin" element={<AdminRoute />} />
+        
+        {/* Main Site Routes */}
+        <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/services" element={<PlaceholderPage title="Our Services" />} />
-          <Route path="/projects" element={<PlaceholderPage title="Projects" />} />
           <Route path="/about" element={<PlaceholderPage title="About Us" />} />
           <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
           <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
+      
+      {/* Admin Link - Only visible in development mode */}
+      <AdminLink />
     </Router>
   )
 }
