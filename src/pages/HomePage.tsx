@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { SimpleMetrics } from '../components/graphics'
+import { FeaturedProjects } from '../components/sections'
 
 const HomePage = () => {
   // Add page title and description
@@ -86,13 +87,17 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* More sections will be added here */}
+      {/* Featured Projects Section */}
+      <FeaturedProjects className="bg-dark" />
+      
+      {/* CTA Section */}
       <section className="py-20 bg-dark">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Get Started</h2>
             <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-              This is a placeholder section. Additional content will be added as we build out the site.
+              Transform your business with custom solutions designed for your specific needs. 
+              Let's build something great together.
             </p>
           </div>
           

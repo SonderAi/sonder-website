@@ -39,6 +39,12 @@ const ProjectAdminPanel = () => {
     
     // Convert form data to object
     formData.forEach((value, key) => {
+      // Special handling for checkboxes (which don't appear in formData when unchecked)
+      if (key === 'featured') {
+        updates[key] = true;
+        return;
+      }
+      
       // Try to parse JSON for arrays and objects
       if (typeof value === 'string') {
         try {
@@ -52,6 +58,11 @@ const ProjectAdminPanel = () => {
       }
       updates[key] = value;
     });
+    
+    // Handle unchecked checkboxes
+    if (!formData.has('featured')) {
+      updates['featured'] = false;
+    }
     
     // Update the project
     projectManager.update(selectedProject.id, updates);
@@ -73,7 +84,8 @@ const ProjectAdminPanel = () => {
       duration: '3 months',
       image: 'bg-gradient-to-br from-indigo-500/20 to-purple-500/20',
       technologies: ['Technology 1', 'Technology 2'],
-      features: ['Feature 1', 'Feature 2']
+      features: ['Feature 1', 'Feature 2'],
+      featured: false
     };
     
     projectManager.add(newProject);
@@ -135,7 +147,16 @@ const ProjectAdminPanel = () => {
                   }`}
                   onClick={() => selectProject(project.id)}
                 >
-                  <h3 className="font-medium">{project.title}</h3>
+                  <div className="flex justify-between items-start">
+                    <h3 className="font-medium">{project.title}</h3>
+                    {project.featured && (
+                      <span className="text-primary" title="Featured on homepage">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                          <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clipRule="evenodd" />
+                        </svg>
+                      </span>
+                    )}
+                  </div>
                   <div className="flex gap-2 mt-1">
                     <span className="text-xs py-0.5 px-2 rounded-full bg-dark-border text-text-secondary">
                       {project.category}
@@ -232,6 +253,65 @@ const ProjectAdminPanel = () => {
                           className="w-full bg-dark p-2 rounded border border-dark-border focus:border-primary focus:outline-none"
                         />
                       </div>
+                      
+                      <div className="md:col-span-2">
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            name="featured"
+                            id="featured"
+                            defaultChecked={selectedProject.featured}
+                            className="h-4 w-4 text-primary focus:ring-primary border-dark-border rounded"
+                          />
+                          <label htmlFor="featured" className="ml-2 block text-sm text-text-secondary">
+                            Featured on Homepage
+                          </label>
+                        </div>
+                        <p className="text-xs text-text-muted mt-1">
+                          Featured projects will be displayed in the Featured Projects section on the homepage.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-text-secondary mb-1">Description</label>
+                      <textarea
+                        name="description"
+                        defaultValue={selectedProject.description}
+                        rows={3}
+                        className="w-full bg-dark p-2 rounded border border-dark-border focus:border-primary focus:outline-none"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-text-secondary mb-1">Challenge</label>
+                      <textarea
+                        name="challenge"
+                        defaultValue={selectedProject.challenge}
+                        rows={3}
+                        className="w-full bg-dark p-2 rounded border border-dark-border focus:border-primary focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-text-secondary mb-1">Solution</label>
+                      <textarea
+                        name="solution"
+                        defaultValue={selectedProject.solution}
+                        rows={3}
+                        className="w-full bg-dark p-2 rounded border border-dark-border focus:border-primary focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-text-secondary mb-1">Results</label>
+                      <textarea
+                        name="results"
+                        defaultValue={selectedProject.results}
+                        rows={3}
+                        className="w-full bg-dark p-2 rounded border border-dark-border focus:border-primary focus:outline-none"
+                      />
                     </div>
                     
                     <div>
@@ -332,6 +412,24 @@ const ProjectAdminPanel = () => {
                       <div>
                         <h3 className="text-sm font-medium text-text-muted">Duration</h3>
                         <p>{selectedProject.duration || "—"}</p>
+                      </div>
+                      
+                      <div className="md:col-span-2">
+                        <h3 className="text-sm font-medium text-text-muted">Featured Status</h3>
+                        <div className="flex items-center mt-1">
+                          {selectedProject.featured ? (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 mr-1">
+                                <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clipRule="evenodd" />
+                              </svg>
+                              Featured on Homepage
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-dark-border/30 text-text-secondary">
+                              Not Featured
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     

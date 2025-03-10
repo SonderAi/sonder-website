@@ -21,6 +21,7 @@ export const defaultProjects: ProjectDetails[] = [
       "Behavioral pattern recognition",
       "Automated reporting"
     ],
+    featured: true,
     gallery: [
       "bg-gradient-to-br from-indigo-600/20 to-purple-600/20",
       "bg-gradient-to-br from-indigo-700/20 to-purple-700/20",
@@ -44,6 +45,7 @@ export const defaultProjects: ProjectDetails[] = [
     results: "Process efficiency improved by 65%, reporting time decreased by 80%, and the company saved over $500,000 annually through better resource allocation.",
     image: "bg-gradient-to-br from-blue-500/20 to-teal-500/20",
     technologies: ["Angular", "PostgreSQL", "Express", "Docker", "Kubernetes"],
+    featured: true,
     features: [
       "Integrated modules for all departments",
       "Real-time reporting and analytics",
@@ -69,6 +71,7 @@ export const defaultProjects: ProjectDetails[] = [
     results: "The app achieved a 300% ROI within the first year, with a 45% reduction in product returns and a 78% increase in mobile conversion rates.",
     image: "bg-gradient-to-br from-orange-500/20 to-pink-500/20",
     technologies: ["React Native", "Firebase", "Redux", "AR Kit", "TensorFlow Lite"],
+    featured: true,
     features: [
       "AR product visualization",
       "Personalized recommendations",
@@ -99,6 +102,7 @@ export const defaultProjects: ProjectDetails[] = [
     results: "Downtime was reduced by 85%, maintenance costs decreased by 30%, and equipment lifespan increased by an estimated 20%.",
     image: "bg-gradient-to-br from-green-500/20 to-cyan-500/20",
     technologies: ["Python", "AWS IoT", "Machine Learning", "Grafana", "Node-RED"],
+    featured: false,
     features: [
       "Real-time equipment monitoring",
       "Predictive maintenance alerts",

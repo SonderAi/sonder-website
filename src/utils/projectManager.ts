@@ -35,6 +35,24 @@ class ProjectManager implements ProjectDataManager {
     return this.projects.find(project => project.id === id);
   }
 
+  // Get featured projects
+  getFeatured(limit?: number): ProjectDetails[] {
+    const featuredProjects = this.projects.filter(project => project.featured);
+    return limit ? featuredProjects.slice(0, limit) : featuredProjects;
+  }
+
+  // Set a project as featured or not
+  setFeatured(id: number, featured: boolean): ProjectDetails | undefined {
+    const index = this.projects.findIndex(project => project.id === id);
+    
+    if (index < 0) return undefined;
+    
+    this.projects[index].featured = featured;
+    this.saveToLocalStorage();
+    
+    return this.projects[index];
+  }
+
   // Add a new project
   add(project: ProjectDetails): ProjectDetails {
     // Generate a new ID if not provided
