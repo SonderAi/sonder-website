@@ -31,7 +31,18 @@
   --warning: #f59e0b;         /* Vibrant amber for warning */
   --error: #ef4444;           /* Bold red for error */
   --info: #3b82f6;            /* Bright blue for info */
+
+  /* Light Theme Variables - for white background elements */
+  --light: #ffffff;           /* White background */
+  --light-surface: #f9fafb;   /* Slightly off-white for cards/surfaces */
+  --light-hover: #f3f4f6;     /* Light gray for hover states */
+  --light-border: #e5e7eb;    /* Light gray for borders */
   
+  /* Text Colors for Light Backgrounds */
+  --text-dark: #111827;       /* Dark text for light backgrounds */
+  --text-dark-secondary: #374151; /* Medium gray for secondary text */
+  --text-dark-muted: #6b7280; /* Lighter gray for less emphasis */
+
   /* Spacing System */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
