@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { SimpleMetrics } from '../components/graphics'
-import { FeaturedProjects, FeaturesOverview } from '../components/sections'
+import { FeaturedProjects, FeaturesOverview, ServicesOverview } from '../components/sections'
 
 const HomePage = () => {
   // Add page title and description
@@ -86,6 +86,9 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Services Overview Section */}
+      <ServicesOverview />
       
       {/* Featured Projects Section */}
       <FeaturedProjects className="bg-dark" />
