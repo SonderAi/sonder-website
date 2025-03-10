@@ -36,3 +36,18 @@ export interface ProjectDataManager {
 
 // Project categories
 export const projectCategories = ["All", "Artificial Intelligence", "Business Automation", "Mobile Development", "IoT & Cloud"];
+
+export interface FeatureData {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color?: string;
+}
+
+export interface FeatureCategory {
+  id: string;
+  title: string;
+  description: string;
+  features: FeatureData[];
+}

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
+import FeaturesPage from './pages/FeaturesPage'
 import { AdminRoute, AdminLink } from './components/admin'
 
 // Placeholder pages that will be developed later
@@ -26,7 +27,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/services" element={<PlaceholderPage title="Our Services" />} />
-          <Route path="/about" element={<PlaceholderPage title="About Us" />} />
+          <Route path="/about" element={<FeaturesPage />} />
           <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
           <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
         </Route>
