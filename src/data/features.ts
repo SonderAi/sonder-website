@@ -1,5 +1,5 @@
 // src/data/features.ts
-import { FeatureData, FeatureCategory } from '../types/types';
+import { FeatureCategory } from '../types/types';
 
 export const featureData: FeatureCategory[] = [
   {
