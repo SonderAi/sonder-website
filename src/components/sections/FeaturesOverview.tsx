@@ -4,14 +4,15 @@ import FeatureIcon from '../ui/FeatureIcon';
 import { featureData } from '../../data/features';
 import { 
   AILightIllustration, 
-  WebAppIllustration, 
-  AutomationIllustration 
+  AutomationIllustration,
+  DigitalPuzzle
 } from '../graphics/illustrations';
 import { 
   CircuitLines, 
   DataFlow, 
   NeuralNetwork 
 } from '../graphics/decorative';
+import MobileAppDemo from '../graphics/mobileapp/MobileApp';
 
 interface FeaturesOverviewProps {
   className?: string;
@@ -113,11 +114,11 @@ const FeaturesOverview: React.FC<FeaturesOverviewProps> = ({ className = '' }) =
       case 'ai-innovation':
         return <AILightIllustration className="w-full h-full" />;
       case 'technical':
-        return <WebAppIllustration className="w-full h-full" />;
+        return <MobileAppDemo className="w-full h-full" />;
       case 'process':
-        return <AutomationIllustration className="w-full h-full" />;
+        return <DigitalPuzzle className="w-full h-full" />;
       default:
-        return <AILightIllustration className="w-full h-full" />;
+        return <AutomationIllustration className="w-full h-full" />;
     }
   };
   

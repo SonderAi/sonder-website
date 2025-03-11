@@ -1,4 +1,4 @@
-// src/components/graphics/TechDiagram.tsx
+// src/components/graphics/dashboard/TechDiagram.tsx
 import React, { useState } from 'react';
 import FeatureIcon from '../../ui/FeatureIcon';
 
@@ -68,16 +68,10 @@ const TechDiagram: React.FC<TechDiagramProps> = ({ className = '' }) => {
   const dashboardContent = getDashboardContent();
   
   // Calculate max value for chart
-  const maxChartValue = Math.max(...dashboardContent.chart);
+  // const maxChartValue = Math.max(...dashboardContent.chart);
 
   return (
     <div className={`relative ${className}`}>
-      {/* Animated spinning circles */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-full h-full border-2 border-dashed border-primary/10 rounded-full animate-spin-slow"></div>
-        <div className="absolute w-3/4 h-3/4 border-2 border-dashed border-accent/10 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
-      </div>
-      
       {/* Interactive Dashboard */}
       <div className="w-full relative z-10 bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-xl shadow-xl overflow-hidden">
         {/* Background gradients and shapes for visual interest */}

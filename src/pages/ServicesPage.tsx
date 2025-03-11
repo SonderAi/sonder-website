@@ -1,18 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  WebAppIllustration, 
-  AILightIllustration, 
-  AutomationIllustration,
   CircuitLines,
   DataFlow,
   NeuralNetwork,
   SimpleMetrics,
   AnalyticsDashboard,
-  WorkflowAutomationDashboard
 } from '../components/graphics';
 import FeatureIcon from '../components/ui/FeatureIcon';
 import { ServicesData } from '../data/services';
+import { MobileApp } from '../components/graphics/mobileapp';
 
 const ServicesPage = () => {
   const [activeService, setActiveService] = useState<string | null>(null);
@@ -94,20 +91,6 @@ const ServicesPage = () => {
       }, 100);
     }
   };
-
-  // Get illustration based on service type
-  const getIllustration = (illustrationType: string) => {
-    switch (illustrationType) {
-      case 'ai':
-        return <AILightIllustration className="w-full h-full" />;
-      case 'web':
-        return <WebAppIllustration className="w-full h-full" />;
-      case 'automation':
-        return <AutomationIllustration className="w-full h-full" />;
-      default:
-        return <WebAppIllustration className="w-full h-full" />;
-    }
-  };
   
   // Get decorative background element
   const getBackgroundElement = (illustrationType: string, color: string) => {
@@ -116,8 +99,8 @@ const ServicesPage = () => {
         return <NeuralNetwork className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
       case 'web':
         return <CircuitLines className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
-      case 'automation':
-        return <DataFlow className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
+      case 'mobile':
+        return <CircuitLines className="absolute inset-0 opacity-20" />;
       default:
         return <CircuitLines className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
     }
@@ -135,23 +118,11 @@ const ServicesPage = () => {
           progressMetric={{ label: 'Training', value: 78, color: 'var(--accent)' }}
           className="transform hover:-translate-y-2 transition-all duration-300"
         />;
-      case 'automation':
-        return <WorkflowAutomationDashboard className="w-full shadow-lg transform hover:-translate-y-2 transition-all duration-300" />;
+      case 'mobile':
+        return <MobileApp className="w-full shadow-lg transform hover:-translate-y-2 transition-all duration-300" />;
       default:
         return <AnalyticsDashboard className="w-full shadow-lg transform hover:-translate-y-2 transition-all duration-300" />;
     }
-  };
-
-  // Get current service
-  const getCurrentService = (serviceId: string) => {
-    return ServicesData.find(service => service.id === serviceId) || ServicesData[0];
-  };
-  
-  // Animation helper
-  const getAnimationClass = (isVisible: boolean, delay: number = 0) => {
-    return isVisible 
-      ? `animate-fade-in-up opacity-100 translate-y-0` 
-      : `opacity-0 translate-y-10`;
   };
 
   return (
@@ -182,7 +153,16 @@ const ServicesPage = () => {
                 style={{ transitionDelay: '0.2s' }}
               >
                 <span className="inline-block relative">
-                  Our Services
+                <span 
+                  className="inline-block"
+                  style={{ 
+                    background: 'linear-gradient(to right, var(--primary), var(--accent), var(--secondary))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >Our Services</span>
                   <span className={`absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary via-accent to-secondary ${isHeroVisible ? 'animate-grow-width w-full' : 'w-0'}`} style={{ transitionDelay: '0.6s' }}></span>
                 </span>
               </h1>
@@ -392,7 +372,7 @@ const ServicesPage = () => {
                           <div 
                             key={idx}
                             className="flex items-start bg-dark/30 rounded-lg p-4 border border-dark-border/50 transition-all duration-300 hover:border-opacity-100 hover:shadow-lg hover:shadow-[var(--${service.color})/5]"
-                            style={{ borderColor: `var(--${service.color})`, borderOpacity: '0.3' }}
+                            style={{ borderColor: `var(--${service.color})30` }}
                           >
                             <div 
                               className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold mr-4"
@@ -495,7 +475,7 @@ const ServicesPage = () => {
                           <div 
                             key={idx}
                             className="flex items-start bg-dark/30 rounded-lg p-4 border border-dark-border/50 transition-all duration-300 hover:border-opacity-100 hover:shadow-lg hover:shadow-[var(--${service.color})/5]"
-                            style={{ borderColor: `var(--${service.color})`, borderOpacity: '0.3' }}
+                            style={{ borderColor: `var(--${service.color})30` }}
                           >
                             <div 
                               className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold mr-4"

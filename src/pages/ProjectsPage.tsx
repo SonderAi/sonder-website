@@ -71,7 +71,16 @@ const ProjectsPage = () => {
         {/* Page Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-text-primary">
-            Our Projects
+          <span 
+                  className="inline-block"
+                  style={{ 
+                    background: 'linear-gradient(to right, var(--primary), var(--accent), var(--secondary))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >Our Projects</span>
           </h1>
           <p className="text-xl max-w-3xl mx-auto text-text-secondary">
             Innovative solutions that deliver real-world results for our clients

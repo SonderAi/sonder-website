@@ -6,3 +6,6 @@ export { default as AutomationIllustration } from './AutomationIllustration';
 export { default as ContactIllustration } from './ContactIllustration';
 export { default as ProjectShowcase } from './ProjectShowcase';
 export { default as ServiceIllustration } from './ServiceIllustration';
+export { default as CollaborativeDiscovery } from './CollaborativeDiscovery';
+export { default as AbstractCollaboration } from './AbstractCollaboration';
+export { default as DigitalPuzzle } from './DigitalPuzzle';

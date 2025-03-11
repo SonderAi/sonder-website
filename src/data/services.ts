@@ -97,41 +97,41 @@ export interface ServiceProcess {
       ]
     },
     {
-      id: 'automation',
-      title: 'Business Process Automation',
-      description: 'Streamline operations by automating repetitive tasks and optimizing workflows',
-      expandedDescription: 'Our business process automation solutions eliminate manual, repetitive tasks and streamline complex workflows. By digitizing and automating key processes, we help you increase efficiency, reduce errors, and free up your team to focus on high-value activities.',
-      icon: 'ArrowPathIcon',
+      id: 'mobile',
+      title: 'Mobile App Development',
+      description: 'Native and cross-platform mobile applications that deliver exceptional user experiences',
+      expandedDescription: 'Our mobile app development services help businesses reach customers on their preferred devices. We build responsive, feature-rich applications for iOS and Android that combine beautiful design with powerful functionality to engage users and drive business growth.',
+      icon: 'DevicePhoneMobileIcon',
       color: 'secondary',
-      illustration: 'automation',
+      illustration: 'mobile',
       benefits: [
-        'Reduced operational costs',
-        'Minimized human error',
-        'Increased efficiency and productivity',
-        'Better resource allocation',
-        'Improved process visibility and tracking',
-        'Enhanced compliance and reporting'
+        'Native and cross-platform solutions',
+        'Intuitive user interfaces and experiences',
+        'Offline functionality capabilities',
+        'Seamless backend integration',
+        'Push notification systems',
+        'App store optimization and deployment'
       ],
       process: [
         {
-          title: 'Process Mapping',
-          description: 'Documenting and analyzing your current workflows to identify automation opportunities.'
+          title: 'Discovery',
+          description: 'Understanding your business goals, target audience, and key app requirements.'
         },
         {
-          title: 'Solution Design',
-          description: 'Creating a custom automation solution tailored to your specific business processes.'
+          title: 'UX/UI Design',
+          description: 'Creating engaging, intuitive interfaces optimized for mobile interaction patterns.'
         },
         {
           title: 'Development',
-          description: 'Building the automation tools and integrations needed to streamline your workflows.'
+          description: 'Building your app using modern frameworks for optimal performance and user experience.'
         },
         {
           title: 'Testing',
-          description: 'Thorough testing to ensure reliability, accuracy, and performance of automated processes.'
+          description: 'Comprehensive testing across multiple devices and platforms to ensure reliability.'
         },
         {
-          title: 'Implementation & Training',
-          description: 'Smooth deployment and comprehensive training for your team to maximize adoption.'
+          title: 'Deployment & Support',
+          description: 'Publishing to app stores and providing ongoing maintenance and feature updates.'
         }
       ]
     }

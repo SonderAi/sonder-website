@@ -1,231 +1,156 @@
-// src/components/graphics/TechDiagram.tsx
-import React, { useState } from 'react';
-import FeatureIcon from '../ui/FeatureIcon';
+// src/components/sections/HeroSection.tsx
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { NeuralNetwork, TechDiagram } from '../graphics';
 
-interface TechDiagramProps {
+interface HeroSectionProps {
   className?: string;
 }
 
-const TechDiagram: React.FC<TechDiagramProps> = ({ className = '' }) => {
-  const [activeTab, setActiveTab] = useState('analytics');
+const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  // Dashboard metrics based on active tab
-  const getDashboardContent = () => {
-    switch(activeTab) {
-      case 'analytics':
-        return {
-          title: 'Business Analytics',
-          metrics: [
-            { label: 'Conversion', value: '12.8%', change: '+2.6%', color: 'primary' },
-            { label: 'Revenue', value: '$48.5k', change: '+8.2%', color: 'accent' },
-            { label: 'Users', value: '2,845', change: '+12.3%', color: 'secondary' }
-          ],
-          chart: [35, 45, 60, 52, 75, 85, 68, 78]
-        };
-      case 'automation':
-        return {
-          title: 'Workflow Automation',
-          metrics: [
-            { label: 'Tasks', value: '124', change: '-8.4%', color: 'success' },
-            { label: 'Time Saved', value: '36hrs', change: '+24.2%', color: 'info' },
-            { label: 'Efficiency', value: '94.2%', change: '+5.7%', color: 'accent' }
-          ],
-          chart: [45, 65, 72, 85, 80, 95, 85, 92]
-        };
-      case 'ai':
-        return {
-          title: 'AI Performance',
-          metrics: [
-            { label: 'Accuracy', value: '96.8%', change: '+1.2%', color: 'accent' },
-            { label: 'Predictions', value: '4,256', change: '+18.7%', color: 'primary' },
-            { label: 'Processing', value: '2.4ms', change: '-12.5%', color: 'success' }
-          ],
-          chart: [78, 65, 82, 75, 85, 92, 88, 95]
-        };
-      case 'integration':
-        return {
-          title: 'System Integration',
-          metrics: [
-            { label: 'Uptime', value: '99.9%', change: '+0.2%', color: 'info' },
-            { label: 'API Calls', value: '853k', change: '+32.5%', color: 'secondary' },
-            { label: 'Response', value: '42ms', change: '-18.6%', color: 'primary' }
-          ],
-          chart: [88, 75, 92, 85, 76, 90, 95, 98]
-        };
-      default:
-        return {
-          title: 'Business Analytics',
-          metrics: [
-            { label: 'Conversion', value: '12.8%', change: '+2.6%', color: 'primary' },
-            { label: 'Revenue', value: '$48.5k', change: '+8.2%', color: 'accent' },
-            { label: 'Users', value: '2,845', change: '+12.3%', color: 'secondary' }
-          ],
-          chart: [35, 45, 60, 52, 75, 85, 68, 78]
-        };
+  // Setup intersection observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-  };
-
-  const dashboardContent = getDashboardContent();
-  
-  // Calculate max value for chart
-  const maxChartValue = Math.max(...dashboardContent.chart);
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Animated spinning circles */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-full h-full border-2 border-dashed border-primary/10 rounded-full animate-spin-slow"></div>
-        <div className="absolute w-3/4 h-3/4 border-2 border-dashed border-accent/10 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
-      </div>
+    <section 
+      ref={sectionRef}
+      className={`relative min-h-[90vh] flex items-center ${className}`}
+    >
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-dark-surface to-dark"></div>
       
-      {/* Interactive Dashboard */}
-      <div className="w-full relative z-10 bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-xl shadow-xl overflow-hidden">
-        {/* Background gradients and shapes for visual interest */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Gradient blobs */}
-          <div className="absolute top-1/4 -right-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-xl"></div>
-          <div className="absolute bottom-1/4 -left-10 w-40 h-40 rounded-full bg-gradient-to-br from-accent/20 to-secondary/10 blur-xl"></div>
-          
-          {/* Decorative shapes - only visible on hover */}
-          <div className="absolute top-1/3 left-1/4 w-16 h-16 border border-primary/30 rounded-lg rotate-12 opacity-40"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-12 h-12 border border-accent/30 rounded-full opacity-40"></div>
-          
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 opacity-5" 
-               style={{ 
-                 backgroundImage: `linear-gradient(var(--dark-border) 1px, transparent 1px), 
-                                   linear-gradient(90deg, var(--dark-border) 1px, transparent 1px)`, 
-                 backgroundSize: '20px 20px' 
-               }}>
-          </div>
-        </div>
-        
-        {/* Dashboard Header */}
-        <div className="bg-gradient-to-r from-dark-surface/90 via-primary/10 to-dark/80 px-4 py-3 border-b border-dark-border flex items-center justify-between relative z-10">
-          <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-br from-primary to-accent rounded-md p-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
-                <path fillRule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <h3 className="text-sm md:text-base font-semibold text-white">{dashboardContent.title}</h3>
-          </div>
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-error rounded-full"></div>
-            <div className="w-3 h-3 bg-warning rounded-full"></div>
-            <div className="w-3 h-3 bg-success rounded-full"></div>
-          </div>
-        </div>
-        
-        {/* Tab Navigation */}
-        <div className="flex bg-gradient-to-r from-dark/60 via-primary/5 to-dark/40 p-1 mx-3 mt-3 rounded-lg border border-dark-border/40 relative z-10">
-          <button 
-            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs rounded-md transition-all ${activeTab === 'analytics' ? 'bg-gradient-to-br from-primary/20 to-dark-surface/80 text-white shadow-md' : 'text-text-secondary hover:text-white'}`}
-            onClick={() => setActiveTab('analytics')}
-          >
-            <FeatureIcon iconName="ChartBarIcon" color={activeTab === 'analytics' ? 'primary' : 'text-secondary'} className="w-4 h-4" />
-            <span className="hidden md:inline">Analytics</span>
-          </button>
-          <button 
-            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs rounded-md transition-all ${activeTab === 'automation' ? 'bg-gradient-to-br from-success/20 to-dark-surface/80 text-white shadow-md' : 'text-text-secondary hover:text-white'}`}
-            onClick={() => setActiveTab('automation')}
-          >
-            <FeatureIcon iconName="ArrowPathIcon" color={activeTab === 'automation' ? 'success' : 'text-secondary'} className="w-4 h-4" />
-            <span className="hidden md:inline">Automation</span>
-          </button>
-          <button 
-            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs rounded-md transition-all ${activeTab === 'ai' ? 'bg-gradient-to-br from-accent/20 to-dark-surface/80 text-white shadow-md' : 'text-text-secondary hover:text-white'}`}
-            onClick={() => setActiveTab('ai')}
-          >
-            <FeatureIcon iconName="CpuChipIcon" color={activeTab === 'ai' ? 'accent' : 'text-secondary'} className="w-4 h-4" />
-            <span className="hidden md:inline">AI</span>
-          </button>
-          <button 
-            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs rounded-md transition-all ${activeTab === 'integration' ? 'bg-gradient-to-br from-info/20 to-dark-surface/80 text-white shadow-md' : 'text-text-secondary hover:text-white'}`}
-            onClick={() => setActiveTab('integration')}
-          >
-            <FeatureIcon iconName="ArrowsPointingInIcon" color={activeTab === 'integration' ? 'info' : 'text-secondary'} className="w-4 h-4" />
-            <span className="hidden md:inline">Integration</span>
-          </button>
-        </div>
-        
-        {/* Key Metrics */}
-        <div className="grid grid-cols-3 gap-3 p-3 relative z-10">
-          {dashboardContent.metrics.map((metric, index) => (
-            <div 
-              key={index} 
-              className="bg-gradient-to-br from-dark/60 via-dark/40 to-dark/30 backdrop-blur-md rounded-lg p-3 border border-dark-border/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg overflow-hidden"
-              style={{ 
-                boxShadow: `0 4px 12px rgba(var(--${metric.color}-rgb), 0.15)`,
-                borderImage: `linear-gradient(to bottom right, var(--${metric.color})/40%, transparent) 1`
-              }}
+      {/* Main content container */}
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center">
+          {/* Content Side */}
+          <div className="lg:w-1/2 mb-10 lg:mb-0">
+            {/* Main Heading */}
+            <h1 
+              className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`}
+              style={{ transitionDelay: '0.2s' }}
             >
-              {/* Add more color with a background accent */}
-              <div 
-                className="absolute -right-6 -bottom-6 w-12 h-12 rounded-full opacity-20"
-                style={{ background: `var(--${metric.color})` }}
-              ></div>
-              
-              <div className="text-xs text-text-secondary mb-1">{metric.label}</div>
-              <div className="text-lg font-bold" style={{ color: `var(--${metric.color})` }}>{metric.value}</div>
-              <div className={`text-xs mt-1 ${metric.change.startsWith('+') ? 'text-success' : 'text-error'} font-medium`}>
-                {metric.change}
+              <span className="text-text-primary block">Transforming Ideas</span>
+              <div className="relative inline-block mt-2">
+                <span 
+                  className="inline-block"
+                  style={{ 
+                    background: 'linear-gradient(to right, var(--primary), var(--accent), var(--secondary))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >
+                  Into Reality
+                </span>
+                <div className={`absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary via-accent to-secondary ${isVisible ? 'animate-grow-width w-full' : 'w-0'}`} style={{ transitionDelay: '0.6s' }}></div>
+              </div>
+            </h1>
+            
+            {/* Description */}
+            <p 
+              className={`text-xl text-text-secondary mb-8 max-w-lg ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`}
+              style={{ transitionDelay: '0.3s' }}
+            >
+              We build high-performance technologies that help businesses streamline operations and drive efficiency in the digital age.
+            </p>
+            
+            {/* Call to Action Button */}
+            <div 
+              className={`${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`}
+              style={{ transitionDelay: '0.4s' }}
+            >
+              {/* Primary button with animated glow effect */}
+              <div className="relative inline-block group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-secondary rounded-lg opacity-70 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500 animate-pulse-slow" style={{ transform: 'translateY(4px)' }}></div>
+                
+                <Link 
+                  to="/contact" 
+                  className="relative btn btn-primary px-6 py-3 inline-flex items-center z-10 group-hover:translate-y-1 transition-transform duration-300"
+                >
+                  <span className="mr-2">Get Started</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                  </svg>
+                </Link>
               </div>
             </div>
-          ))}
-        </div>
-        
-        {/* Chart */}
-        <div className="px-3 pb-3 relative z-10">
-          <div className="bg-gradient-to-br from-dark/60 via-dark/40 to-dark/30 backdrop-blur-md rounded-lg p-3 border border-dark-border/50 transition-all duration-300 hover:shadow-lg relative overflow-hidden">
-            {/* Colorful background accent */}
-            <div 
-              className="absolute -top-10 right-0 w-40 h-40 rounded-full opacity-10 blur-2xl"
-              style={{ background: `var(--${dashboardContent.metrics[0].color})` }}
-            ></div>
-            
-            {/* Chart title and subtitle with more color */}
-            <div className="mb-1 flex justify-between items-center">
-              <h4 className="text-xs font-medium" style={{ color: `var(--${dashboardContent.metrics[0].color})` }}>Performance</h4>
-              <div className="text-[10px] text-text-secondary">Last 8 days</div>
-            </div>
-            
-            <div className="flex items-end h-28 space-x-1">
-              {dashboardContent.chart.map((value, index) => (
-                <div key={index} className="flex-1 flex flex-col items-center group">
-                  <div 
-                    className="w-full rounded-t-sm hover:opacity-90 transition-all duration-300 relative overflow-hidden group-hover:shadow-lg"
-                    style={{ 
-                      height: `${(value / maxChartValue) * 100}%`,
-                      background: `linear-gradient(to top, var(--${dashboardContent.metrics[0].color}), var(--${dashboardContent.metrics[0].color})/60%)`,
-                      maxWidth: '30px'
-                    }}
-                  >
-                    {/* Shine effect on hover */}
-                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  </div>
-                  <span className="text-[8px] text-text-secondary mt-1">D{index+1}</span>
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
-        
-        {/* Bottom status bar */}
-        <div className="bg-gradient-to-r from-dark-surface/90 via-accent/5 to-dark/80 px-4 py-2 border-t border-dark-border flex justify-between items-center text-xs text-text-secondary relative z-10">
-          <div>Status: Active</div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-            <span>Connected</span>
+          
+          {/* Visual Side - Interactive Tech Diagram with enhanced animations */}
+          <div className="lg:w-1/2 flex justify-center">
+            <div 
+              className={`relative max-w-lg w-full ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`}
+              style={{ transitionDelay: '0.4s' }}
+            >
+              {/* Tech Diagram wrapper with additional animations */}
+              <div className="relative animate-float-medium transition-all duration-500 transform hover:scale-105">
+                {/* Small decorative elements around the diagram */}
+                <div className="absolute -top-4 -left-4 w-8 h-8 border-2 border-primary rounded-lg opacity-50 animate-spin-slow"></div>
+                <div className="absolute -bottom-4 -right-4 w-8 h-8 border-2 border-accent rounded-lg opacity-50 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '15s' }}></div>
+                
+                {/* Small floating dots around the diagram */}
+                <div className="absolute top-1/4 -right-2 w-3 h-3 rounded-full bg-primary opacity-70 animate-ping" style={{ animationDuration: '3s' }}></div>
+                <div className="absolute bottom-1/4 -left-2 w-3 h-3 rounded-full bg-accent opacity-70 animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
+                <div className="absolute top-3/4 right-1/4 w-2 h-2 rounded-full bg-secondary opacity-70 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
+                
+                {/* TechDiagram Component */}
+                <TechDiagram />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      {/* Decorative Elements */}
-      <div className="absolute -bottom-2 -right-2 w-12 h-12 border-2 border-accent rounded-lg opacity-50 hidden md:block"></div>
-      <div className="absolute -top-2 -left-2 w-12 h-12 border-2 border-primary rounded-lg opacity-50 hidden md:block"></div>
-    </div>
+      {/* Bottom wave divider */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <svg 
+          viewBox="0 0 1200 120" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-12 relative block"
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18.17 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" 
+            opacity=".25" 
+            fill="var(--dark-surface)"
+          />
+          <path 
+            d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z" 
+            opacity=".5" 
+            fill="var(--dark-surface)"
+          />
+          <path 
+            d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z" 
+            fill="var(--dark-surface)"
+          />
+        </svg>
+      </div>
+    </section>
   );
 };
 
-export default TechDiagram;
+export default HeroSection;

@@ -43,7 +43,16 @@ const FeaturesHero: React.FC<FeaturesHeroProps> = ({
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">{title}</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"><span 
+                  className="inline-block"
+                  style={{ 
+                    background: 'linear-gradient(to right, var(--primary), var(--accent), var(--secondary))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >{title}</span></h1>
           <p className="text-xl text-text-secondary mb-10">{subtitle}</p>
           
           <a href="#features" className="btn btn-primary">

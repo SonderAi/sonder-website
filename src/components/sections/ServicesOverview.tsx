@@ -9,65 +9,7 @@ import {
   NeuralNetwork
 } from '../graphics';
 import FeatureIcon from '../ui/FeatureIcon';
-
-interface ServiceData {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
-  illustration: string;
-  benefits: string[];
-  background: string;
-}
-
-const servicesData: ServiceData[] = [
-  {
-    id: 'web-apps',
-    title: 'Custom Web Applications',
-    description: 'Tailored web solutions designed to address specific business challenges and goals',
-    icon: 'ServerStackIcon',
-    color: 'primary',
-    illustration: 'web',
-    benefits: [
-      'Intuitive, user-friendly interfaces',
-      'Scalable architecture for growing businesses',
-      'Secure, reliable performance',
-      'Seamless integration with existing systems'
-    ],
-    background: 'from-primary/30 via-primary/10 to-secondary/5'
-  },
-  {
-    id: 'ai-solutions',
-    title: 'AI-Powered Solutions',
-    description: 'Intelligent tools that leverage AI to automate processes and drive insights',
-    icon: 'CpuChipIcon',
-    color: 'accent',
-    illustration: 'ai',
-    benefits: [
-      'Machine learning models for predictive analytics',
-      'Natural language processing capabilities',
-      'Automated data analysis and visualization',
-      'Continuous improvement through learning'
-    ],
-    background: 'from-accent/30 via-accent/10 to-primary/5'
-  },
-  {
-    id: 'automation',
-    title: 'Business Process Automation',
-    description: 'Streamline operations by automating repetitive tasks and optimizing workflows',
-    icon: 'ArrowPathIcon',
-    color: 'secondary',
-    illustration: 'automation',
-    benefits: [
-      'Reduced operational costs',
-      'Minimized human error',
-      'Increased efficiency and productivity',
-      'Better resource allocation'
-    ],
-    background: 'from-secondary/30 via-secondary/10 to-info/5'
-  }
-];
+import { ServicesData, ServiceData } from '../../data/services';
 
 interface ServicesOverviewProps {
   className?: string;
@@ -111,6 +53,8 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
         return <WebAppIllustration className="w-full h-full" />;
       case 'automation':
         return <AutomationIllustration className="w-full h-full" />;
+      case 'mobile':
+        return <WebAppIllustration className="w-full h-full" />; // Add appropriate mobile illustration
       default:
         return <WebAppIllustration className="w-full h-full" />;
     }
@@ -124,6 +68,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
       case 'web':
         return <CircuitLines className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
       case 'automation':
+      case 'mobile':
         return <DataFlow className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
       default:
         return <CircuitLines className="absolute inset-0 opacity-20" color={`var(--${color})`} />;
@@ -147,8 +92,11 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
 
   // Get current service
   const getCurrentService = (serviceId: string) => {
-    return servicesData.find(service => service.id === serviceId) || servicesData[0];
+    return ServicesData.find(service => service.id === serviceId) || ServicesData[0];
   };
+
+  // For the visual display, only show the first 3 services
+  const displayedServices = ServicesData.slice(0, 3);
 
   return (
     <section 
@@ -192,11 +140,11 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
           </p>
         </div>
         
-        {/* Hexagonal Services Grid */}
+        {/* Services Grid */}
         <div className="relative z-10 mb-12">
-          {/* Services hex grid container */}
+          {/* Services container */}
           <div className={`flex flex-col md:flex-row items-stretch justify-center gap-6 ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
-            {servicesData.map((service, index) => (
+            {displayedServices.map((service, index) => (
               <div 
                 ref={(el) => { serviceRefs.current[service.id] = el; }}
                 key={service.id}
@@ -290,7 +238,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
                         </h4>
                         
                         <ul className="space-y-2 mb-4">
-                          {service.benefits.map((benefit, idx) => (
+                          {service.benefits.slice(0, 4).map((benefit, idx) => (
                             <li 
                               key={idx} 
                               className="flex items-start p-2 rounded-lg transition-all duration-300 hover:bg-dark/30"
@@ -323,26 +271,20 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
                       </div>
                     </div>
                     
-                    {/* Animated arrow indicator for when card is not expanded */}
+                    {/* Animated indicators for expanded/collapsed state */}
                     <div 
                       className={`transition-all duration-300 ease-in-out absolute bottom-6 right-6
-                        ${activeService === service.id 
-                          ? 'opacity-0' 
-                          : hoveredService === service.id 
-                            ? 'opacity-100 transform translate-x-1' 
-                            : 'opacity-60'}`}
+                        ${activeService === service.id ? 'opacity-0' : hoveredService === service.id 
+                          ? 'opacity-100 transform translate-x-1' : 'opacity-60'}`}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6" style={{ color: `var(--${service.color})` }}>
                         <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                       </svg>
                     </div>
                     
-                    {/* Animated X indicator for when card is expanded */}
                     <div 
                       className={`transition-all duration-300 ease-in-out absolute bottom-6 right-6
-                        ${activeService === service.id 
-                          ? 'opacity-100' 
-                          : 'opacity-0'}`}
+                        ${activeService === service.id ? 'opacity-100' : 'opacity-0'}`}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6" style={{ color: `var(--${service.color})` }}>
                         <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -355,6 +297,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
           </div>
         </div>
         
+        {/* Rest of the component remains the same... */}
         {/* Bottom showcase with large illustration */}
         <div 
           className={`mt-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`}
@@ -446,6 +389,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
               </Link>
             </div>
           </div>
+          {/* Illustration goes here */}
           
           {/* Illustration side */}
           <div className="relative">
@@ -484,9 +428,9 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
               </div>
               
               {/* Service mini-icons in orbit */}
-              {servicesData.map((service, index) => {
+              {ServicesData.map((service, index) => {
                 // Calculate position along circle
-                const angle = (2 * Math.PI / servicesData.length) * index - Math.PI / 2;
+                const angle = (2 * Math.PI / ServicesData.length) * index - Math.PI / 2;
                 const radius = 40; // % of container
                 const x = 50 + radius * Math.cos(angle);
                 const y = 50 + radius * Math.sin(angle);
@@ -518,67 +462,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
             </div>
           </div>
         </div>
-        
-        {/* Testimonial section */}
-        <div className={`mt-24 ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.7s' }}>
-          <div className="bg-dark-surface/50 backdrop-blur-lg rounded-2xl border border-dark-border p-8 relative overflow-hidden">
-            {/* Background decorative lines */}
-            <div className="absolute inset-0 opacity-10">
-              <DataFlow color="var(--primary)" />
-            </div>
-            
-            {/* Animated gradient orbs */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br from-accent/20 to-secondary/10 blur-3xl"></div>
-            
-            <div className="relative z-10">
-              <div className="flex flex-col md:flex-row gap-8">
-                {/* Testimonial */}
-                <div className="md:w-3/4 flex">
-                  <div className="absolute -top-6 -left-4 bg-gradient-to-br from-primary to-accent text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-90">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                      <path fillRule="evenodd" d="M4.804 21.644A6.707 6.707 0 006 21.75a6.721 6.721 0 003.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 01-.814 1.686.75.75 0 00.44 1.223zM8.25 10.875a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM10.875 12a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zm4.875-1.125a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="mt-6">
-                    <blockquote className="text-lg md:text-xl text-text-primary italic mb-6 relative pl-4">
-                      <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-primary via-accent to-secondary rounded-full"></div>
-                      "Sonder AI transformed our business operations with their custom web application and AI integration. Their ability to understand our specific challenges and create tailored solutions was exceptional. We've seen a 40% improvement in efficiency since implementation."
-                    </blockquote>
-                    <div className="flex items-center">
-                      <div className="bg-gradient-to-r from-primary to-accent w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                        JD
-                      </div>
-                      <div className="ml-4">
-                        <div className="font-medium text-white">Jennifer Davis</div>
-                        <div className="text-sm text-accent">CTO, TechVision Enterprises</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* CTA Button */}
-                <div className="md:w-1/4 flex items-center justify-center md:justify-end">
-                  <div className="relative group">
-                    {/* Animated glow effect */}
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-accent opacity-70 group-hover:opacity-100 blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                    
-                    <Link 
-                      to="/contact" 
-                      className="relative btn btn-primary py-3 px-6 inline-flex items-center group-hover:translate-y-1 transition-transform duration-300"
-                    >
-                      <span className="mr-2">Start Your Project</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300">
-                        <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
   );
 };
