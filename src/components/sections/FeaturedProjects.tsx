@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { projectManager } from '../../utils/projectManager';
 import { ProjectDetails } from '../../types/types';
+import ProjectModal from '../projects/ProjectModal';
 
 interface FeaturedProjectsProps {
   limit?: number;
@@ -16,6 +17,7 @@ const FeaturedProjects = ({
 }: FeaturedProjectsProps) => {
   const [projects, setProjects] = useState<ProjectDetails[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(null);
 
   useEffect(() => {
     let featuredProjects: ProjectDetails[] = [];
@@ -124,8 +126,9 @@ const FeaturedProjects = ({
             <div 
               key={project.id}
               className="group cursor-pointer"
+              onClick={() => setSelectedProject(project)}
             >
-              <Link to={`/projects`} className="block">
+              <div className="block">
                 <div className="card h-full transition-all duration-500">
                   <div className={`p-6 ${project.image} backdrop-blur-sm relative min-h-[200px]`}>
                     <div 
@@ -197,10 +200,16 @@ const FeaturedProjects = ({
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Add the ProjectModal component */}
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
 
         <div className="mt-12 text-center">
           <Link to="/projects" className="btn btn-outline inline-flex items-center">
