@@ -3,6 +3,7 @@ import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
 import FeaturesPage from './pages/FeaturesPage'
+import ServicesPage from './pages/ServicesPage'
 import { AdminRoute, AdminLink } from './components/admin'
 
 // Placeholder pages that will be developed later
@@ -26,7 +27,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/services" element={<PlaceholderPage title="Our Services" />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/about" element={<FeaturesPage />} />
           <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
           <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />

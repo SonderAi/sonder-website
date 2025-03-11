@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { SimpleMetrics } from '../components/graphics'
-import { FeaturedProjects, FeaturesOverview, ServicesOverview } from '../components/sections'
+import { FeaturedProjects, FeaturesOverview, ServicesOverview, HeroSection } from '../components/sections'
 
 const HomePage = () => {
   // Add page title and description
@@ -11,81 +10,7 @@ const HomePage = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center">
-        {/* Background Gradient */}
-        <div 
-          className="absolute inset-0 -z-10" 
-          style={{ 
-            background: 'var(--gradient-dark)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        ></div>
-        
-        {/* Accent Circle */}
-        <div 
-          className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full -z-5 opacity-20" 
-          style={{ 
-            backgroundColor: 'var(--accent)',
-            filter: 'blur(80px)'
-          }}
-        ></div>
-        
-        {/* Primary Circle */}
-        <div 
-          className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full -z-5 opacity-20" 
-          style={{ 
-            backgroundColor: 'var(--primary)',
-            filter: 'blur(80px)'
-          }}
-        ></div>
-        
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-10 md:mb-0">
-              <h1 
-                className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                <span className="block">Custom Web Apps</span>
-                <span className="block" style={{ color: 'var(--accent)' }}>& AI Solutions</span>
-              </h1>
-              
-              <p 
-                className="text-lg sm:text-xl mb-8 max-w-lg"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                We build high-performance technologies that help businesses streamline operations and drive efficiency in the digital age.
-              </p>
-              
-              <div className="flex flex-wrap gap-4">
-                <a 
-                  href="#contact" 
-                  className="btn btn-primary"
-                >
-                  Get Started
-                </a>
-                
-                <a 
-                  href="#projects" 
-                  className="btn btn-outline"
-                >
-                  Our Projects
-                </a>
-              </div>
-            </div>
-            
-            <div className="md:w-1/2 flex justify-center">
-              {/* Use the SimpleMetrics component */}
-              <SimpleMetrics 
-                primaryMetric={{ label: 'Analytics', value: '78%' }}
-                secondaryMetric={{ label: 'Tasks', value: '12' }}
-                progressMetric={{ label: 'Progress', value: 65 }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
       
       {/* Services Overview Section */}
       <ServicesOverview />
@@ -97,9 +22,17 @@ const HomePage = () => {
       <FeaturesOverview />
       
       {/* CTA Section */}
-      <section className="py-20 bg-dark">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-dark relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute -top-1/2 -right-1/4 w-full h-full rounded-full bg-gradient-to-br from-primary/30 to-accent/10 blur-3xl"></div>
+          <div className="absolute top-1/2 -left-1/4 w-full h-full rounded-full bg-gradient-to-br from-accent/20 to-secondary/10 blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
+            <span className="inline-block text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-3">
+              Ready to Innovate
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Get Started</h2>
             <p className="text-xl text-text-secondary max-w-3xl mx-auto">
               Transform your business with custom solutions designed for your specific needs. 
@@ -108,9 +41,19 @@ const HomePage = () => {
           </div>
           
           <div className="flex justify-center">
-            <a href="#contact" className="btn btn-primary">
-              Contact Us
-            </a>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-secondary rounded-lg opacity-70 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500 animate-pulse-slow" style={{ transform: 'translateY(4px)' }}></div>
+              
+              <a 
+                href="#contact" 
+                className="relative btn btn-primary px-8 py-3 inline-flex items-center z-10 group-hover:translate-y-1 transition-transform duration-300"
+              >
+                <span className="mr-2">Contact Us</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300">
+                  <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
