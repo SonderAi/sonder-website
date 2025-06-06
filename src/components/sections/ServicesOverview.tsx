@@ -1,15 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  WebAppIllustration, 
-  AILightIllustration, 
-  AutomationIllustration,
   CircuitLines,
   DataFlow,
   NeuralNetwork
 } from '../graphics';
 import FeatureIcon from '../ui/FeatureIcon';
-import { ServicesData, ServiceData } from '../../data/services';
+import { ServicesData } from '../../data/services';
 
 interface ServicesOverviewProps {
   className?: string;
@@ -43,22 +40,6 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
       }
     };
   }, []);
-
-  // Get illustration based on service type
-  const getIllustration = (illustrationType: string) => {
-    switch (illustrationType) {
-      case 'ai':
-        return <AILightIllustration className="w-full h-full" />;
-      case 'web':
-        return <WebAppIllustration className="w-full h-full" />;
-      case 'automation':
-        return <AutomationIllustration className="w-full h-full" />;
-      case 'mobile':
-        return <WebAppIllustration className="w-full h-full" />; // Add appropriate mobile illustration
-      default:
-        return <WebAppIllustration className="w-full h-full" />;
-    }
-  };
   
   // Get decorative background element
   const getBackgroundElement = (illustrationType: string, color: string) => {
@@ -91,9 +72,9 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
   };
 
   // Get current service
-  const getCurrentService = (serviceId: string) => {
-    return ServicesData.find(service => service.id === serviceId) || ServicesData[0];
-  };
+  // const getCurrentService = (serviceId: string) => {
+  //   return ServicesData.find(service => service.id === serviceId) || ServicesData[0];
+  // };
 
   // For the visual display, only show the first 3 services
   const displayedServices = ServicesData.slice(0, 3);
@@ -144,7 +125,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ className = '' }) =
         <div className="relative z-10 mb-12">
           {/* Services container */}
           <div className={`flex flex-col md:flex-row items-stretch justify-center gap-6 ${isVisible ? 'animate-fade-in-up opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
-            {displayedServices.map((service, index) => (
+            {displayedServices.map((service) => (
               <div 
                 ref={(el) => { serviceRefs.current[service.id] = el; }}
                 key={service.id}

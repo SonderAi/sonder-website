@@ -1,7 +1,7 @@
 // src/components/sections/HeroSection.tsx
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { NeuralNetwork, TechDiagram } from '../graphics';
+import { TechDiagram } from '../graphics';
 
 interface HeroSectionProps {
   className?: string;
