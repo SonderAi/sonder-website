@@ -44,8 +44,7 @@ const Header = () => {
                   clipRule="evenodd" 
                 />
               </svg>
-              <span className="text-white">Sonder</span>
-              <span className="text-accent">AI</span>
+              <span className="text-white">Sondry</span>
             </div>
           </Link>
 

@@ -4,7 +4,7 @@ import { FeaturedProjects, FeaturesOverview, ServicesOverview, HeroSection, CTAS
 const HomePage = () => {
   // Add page title and description
   useEffect(() => {
-    document.title = 'Sonder AI - Modern Web Applications & AI Solutions'
+    document.title = 'Sondry - Web Development Solutions for Your Business'
   }, [])
 
   return (
