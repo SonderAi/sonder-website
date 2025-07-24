@@ -51,7 +51,7 @@ const Header = () => {
           {/* Desktop Menu */}
           <nav className="hidden md:flex">
             <ul className="flex space-x-8">
-              {['Home', 'Services', 'Projects', 'About', 'Contact'].map((item) => (
+              {['Services', 'About', 'Contact'].map((item) => (
                 <li key={item}>
                   <Link 
                     to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
@@ -95,7 +95,7 @@ const Header = () => {
         {mobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 bg-dark-surface rounded-lg p-4 shadow-lg">
             <ul className="flex flex-col space-y-4">
-              {['Home', 'Services', 'Projects', 'About', 'Contact'].map((item) => (
+              {['Services', 'About', 'Contact'].map((item) => (
                 <li key={item}>
                   <Link 
                     to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
